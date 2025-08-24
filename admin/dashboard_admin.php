@@ -16,76 +16,92 @@ while ($row = $result->fetch_assoc()) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <title>Dashboard Admin</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/dashboard_admin.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-dark text-light">
 
-  <!-- Header -->
-  <div class="header">
-    <img src="../logo/logo_login.jpg" alt="Logo" class="header-logo">
-    <h5 class="header-title">SISTEM KASIR VIA ADMIN</h5>
-  </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <img src="../logo/logo_login.jpg" alt="Logo" class="me-2 rounded" style="height:40px;">
+        SISTEM KASIR <span class="text-warning ms-1">ADMIN</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
 
-  <!-- Main Container -->
   <div class="container-fluid">
     <div class="row">
 
       <!-- Sidebar -->
-      <div class="col-md-2 sidebar">
-        <div class="menu-title">Admin</div>
-        <hr>
-        <a href="#" class="nav-link-custom active">
-          <img src="../icon/icon_dashboard.png" class="icon-img"> Dashboard
-        </a>
-        <a href="kelola_produk_admin.php" class="nav-link-custom">
-          <img src="../icon/icon_produk.png" class="icon-img"> Kelola Produk
-        </a>
-        <a href="laporan_penjualan.php" class="nav-link-custom">
-          <img src="../icon/icon_laporan.png" class="icon-img"> Laporan Penjualan
-        </a>
-        <a href="kelola_akun.php" class="nav-link-custom">
-          <img src="../icon/icon_kelola_akun.png" class="icon-img"> Kelola Akun
-        </a>
-        <div class="mt-auto pt-3">
-          <a href="../login/logout.php" class="nav-link-custom">
-            <img src="../icon/icon_logout.jpg" class="icon-img"> Log out
-          </a>
-        </div>
-      </div>
+      <!-- Sidebar -->
+<aside class="col-12 col-md-2 collapse d-md-block p-3" id="sidebarMenu" 
+       style="background-color:#495057; color:#f8f9fa; min-height:100vh;">
+  <h6 class="text-center text-warning mb-3 fw-bold">Admin Menu</h6>
+  <div class="list-group list-group-flush">
+    <a href="#" class="list-group-item list-group-item-action bg-light text-dark active d-flex align-items-center mb-2 rounded">
+      <img src="../icon/icon_dashboard.png" class="me-2" style="height:22px;"> Dashboard
+    </a>
+    <a href="kelola_produk_admin.php" class="list-group-item list-group-item-action bg-light text-dark d-flex align-items-center mb-2 rounded">
+      <img src="../icon/icon_produk.png" class="me-2" style="height:22px;"> Kelola Produk
+    </a>
+    <a href="laporan_penjualan.php" class="list-group-item list-group-item-action bg-light text-dark d-flex align-items-center mb-2 rounded">
+      <img src="../icon/icon_laporan.png" class="me-2" style="height:22px;"> Laporan Penjualan
+    </a>
+    <a href="kelola_akun.php" class="list-group-item list-group-item-action bg-light text-dark d-flex align-items-center mb-2 rounded">
+      <img src="../icon/icon_kelola_akun.png" class="me-2" style="height:22px;"> Kelola Akun
+    </a>
+    <a href="../login/logout.php" class="list-group-item list-group-item-action bg-danger text-light d-flex align-items-center mt-2 rounded">
+      <img src="../icon/icon_logout.jpg" class="me-2" style="height:22px;"> Logout
+    </a>
+  </div>
+</aside>
+
 
       <!-- Main Content -->
-      <main class="col-md-10 p-4">
-        <h3 class="text-danger mb-4">Stok Menipis</h3>
+      <main class="col-12 col-md-10 px-3 py-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center mb-4">
+          <h3 class="text-warning fw-bold mb-2 mb-md-0">Stok Menipis</h3>
+          <span class="ms-md-2 badge bg-warning text-dark fs-6">Barang &lt; 10</span>
+        </div>
+
         <?php if (empty($stok_rendah)): ?>
-          <p class="text-muted">Tidak ada barang dengan stok di bawah 10.</p>
+          <div class="alert alert-info shadow-sm">Tidak ada barang dengan stok di bawah 10.</div>
         <?php else: ?>
-          <div class="row">
+          <div class="row g-3">
             <?php foreach ($stok_rendah as $barang): ?>
-              <div class="col-md-3 mb-4">
-                <div class="stok-card">
-                  <h5 class="barang-nama"><?= htmlspecialchars($barang['nama_barang']) ?></h5>
-                  <p class="barang-stok">Stok: <strong><?= $barang['stok'] ?></strong></p>
-                  <a href="kelola_produk_admin.php" class="btn-stok">Perbarui Stok</a>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 bg-secondary text-light shadow-sm border-0">
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold text-warning">
+                      <?= htmlspecialchars($barang['nama_barang']) ?>
+                    </h5>
+                    <p class="card-text">
+                      Stok: <span class="badge bg-danger fs-6 px-3"><?= $barang['stok'] ?></span>
+                    </p>
+                    <a href="kelola_produk_admin.php" class="btn btn-warning btn-sm w-100">Perbarui Stok</a>
+                  </div>
                 </div>
               </div>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
       </main>
-
     </div>
   </div>
 
   <!-- Footer -->
-  <div class="footer">
-    editor bay @vitamin
-  </div>
+  <footer class="bg-dark text-center py-3 mt-4 border-top border-secondary">
+    <span class="text-secondary">Editor by @vitamin</span>
+  </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -84,94 +84,92 @@ foreach ($_SESSION['transaksi'] as $item) {
   <meta charset="UTF-8">
   <title>Transaksi Kasir</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/transaksi_kasir.css">
-</head>
-<body>
 
-  <!-- Header -->
-  <div class="header">
-    <img src="../logo/logo_login.jpg" alt="Logo" class="header-logo">
-    <h5 class="header-title">SISTEM KASIR</h5>
-  </div>
+</head><body class="bg-dark text-light">
 
-  <!-- Main Container -->
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <img src="../logo/logo_login.jpg" alt="Logo" class="me-2 rounded" style="height:40px;">
+        SISTEM KASIR <span class="text-warning ms-1">KASIR</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
   <div class="container-fluid">
     <div class="row">
 
       <!-- Sidebar -->
-      <div class="col-md-2 sidebar">
-        <div class="menu-title">Kasir</div>
-        <hr>
-        <a href="kelola_produk_kasir.php" class="nav-link-custom">
-          <img src="../icon/icon_produk.png" class="icon-img"> Produk Tersedia
+      <div class="col-md-2 d-flex flex-column" style="background-color:#343a40; min-height:100vh; padding-top:1rem;">
+        <h5 class="text-center text-warning mb-3">Kasir</h5>
+        <hr class="border-secondary">
+        <a href="kelola_produk_kasir.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_produk.png" class="me-2" style="height:24px;"> Produk Tersedia
         </a>
-        <a href="#" class="nav-link-custom active">
-          <img src="../icon/icon_transaksi.jpg" class="icon-img"> Transaksi
+        <a href="#" class="btn btn-light mb-2 d-flex align-items-center active text-dark">
+          <img src="../icon/icon_transaksi.jpg" class="me-2" style="height:24px;"> Transaksi
         </a>
-        <a href="riwayat.php" class="nav-link-custom">
-          <img src="../icon/icon_laporan.png" class="icon-img"> Riwayat
+        <a href="riwayat.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_laporan.png" class="me-2" style="height:24px;"> Riwayat
         </a>
         <div class="mt-auto pt-3">
-          <a href="../login/logout.php" class="nav-link-custom">
-            <img src="../icon/icon_logout.jpg" class="icon-img"> Log out
+          <a href="../login/logout.php" class="btn btn-danger d-flex align-items-center">
+            <img src="../icon/icon_logout.jpg" class="me-2" style="height:24px;"> Log out
           </a>
         </div>
       </div>
 
       <!-- Main Content -->
-      <main class="col-md-10 p-4">
+      <main class="col-md-10 py-4">
         <div class="row">
           <!-- Transaction Area -->
           <div class="col-md-8">
-            <h3 class="mb-4">Transaksi</h3>
+            <h3 class="mb-4 text-warning">Transaksi</h3>
 
             <?php if (isset($_GET['sukses'])): ?>
-              <div class="alert-success">
+              <div class="alert alert-success">
                 Transaksi berhasil diselesaikan.
               </div>
             <?php endif; ?>
 
             <!-- Form Input -->
-            <div class="form-container">
-              <form method="POST">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-label">Cari Barang</label>
-                      <select name="barang" class="form-select" required>
-                        <option value="">-- Pilih Barang --</option>
-                        <?php 
-                        // Reset pointer untuk mengulang data barang
-                        $barang->data_seek(0);
-                        while ($row = $barang->fetch_assoc()): 
-                        ?>
-                          <option value="<?= $row['id_barang'] ?>"><?= htmlspecialchars($row['nama_barang']) ?> - Stok: <?= $row['stok'] ?></option>
-                        <?php endwhile; ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-label">Jumlah</label>
-                      <select name="jumlah" class="form-select" required>
-                        <?php for ($i = 1; $i <= 10; $i++): ?>
-                          <option value="<?= $i ?>"><?= $i ?></option>
-                        <?php endfor; ?>
-                      </select>
-                    </div>
-                  </div>
+            <form method="POST" class="mb-4">
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label class="form-label">Cari Barang</label>
+                  <select name="barang" class="form-select" required>
+                    <option value="">-- Pilih Barang --</option>
+                    <?php 
+                    $barang->data_seek(0);
+                    while ($row = $barang->fetch_assoc()): 
+                    ?>
+                      <option value="<?= $row['id_barang'] ?>"><?= htmlspecialchars($row['nama_barang']) ?> - Stok: <?= $row['stok'] ?></option>
+                    <?php endwhile; ?>
+                  </select>
                 </div>
-                <div class="mt-3">
-                  <button type="submit" name="tambah" class="btn-tambah">Tambah</button>
-                  <button type="submit" name="reset" class="btn-reset">Ulangi</button>
+                <div class="col-md-6">
+                  <label class="form-label">Jumlah</label>
+                  <select name="jumlah" class="form-select" required>
+                    <?php for ($i = 1; $i <= 10; $i++): ?>
+                      <option value="<?= $i ?>"><?= $i ?></option>
+                    <?php endfor; ?>
+                  </select>
                 </div>
-              </form>
-            </div>
+              </div>
+              <div class="mt-3">
+                <button type="submit" name="tambah" class="btn btn-primary me-2">Tambah</button>
+                <button type="submit" name="reset" class="btn btn-secondary">Ulangi</button>
+              </div>
+            </form>
 
             <!-- Transaction Table -->
-            <div class="table-container">
-              <table class="table table-bordered mb-0">
-                <thead>
+            <div class="table-responsive">
+              <table class="table table-dark table-striped table-bordered mb-0">
+                <thead class="table-secondary text-dark">
                   <tr>
                     <th>No</th>
                     <th>ID Barang</th>
@@ -205,13 +203,16 @@ foreach ($_SESSION['transaksi'] as $item) {
 
           <!-- Nota Area -->
           <div class="col-md-4">
-            <div class="nota-card">
-              <div class="nota-number">No. <?= uniqid('trx') ?></div>
-              <div class="nota-total">Rp. <?= number_format($totalBayar, 0, ',', '.') ?></div>
-              <form method="POST">
-                <input type="hidden" name="bayar" value="1">
-                <button type="submit" class="btn-bayar">Selesaikan Transaksi</button>
-              </form>
+            <div class="card shadow-sm bg-dark text-light">
+              <div class="card-body">
+                <h5 class="card-title">No. <?= uniqid('trx') ?></h5>
+                <h6 class="card-subtitle mb-2 text-secondary">Total</h6>
+                <p class="card-text fs-4 fw-bold">Rp. <?= number_format($totalBayar, 0, ',', '.') ?></p>
+                <form method="POST">
+                  <input type="hidden" name="bayar" value="1">
+                  <button type="submit" class="btn btn-success w-100">Selesaikan Transaksi</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -221,9 +222,9 @@ foreach ($_SESSION['transaksi'] as $item) {
   </div>
 
   <!-- Footer -->
-  <div class="footer">
+  <footer class="bg-dark text-center py-3 mt-4 text-light border-top border-secondary">
     editor bay @vitamin
-  </div>
+  </footer>
 
 </body>
 </html>

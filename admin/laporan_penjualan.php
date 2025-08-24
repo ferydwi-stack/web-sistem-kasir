@@ -85,85 +85,104 @@ $totalBarangTerjual = $summary['total_barang_terjual'] ?? 0;
   <meta charset="UTF-8">
   <title>Laporan Penjualan</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/laporan_penjualan.css">
+
 </head>
-<body>
+<body class="bg-dark text-light">
 
-  <!-- Header -->
-  <div class="header">
-    <img src="../logo/logo_login.jpg" alt="Logo" class="header-logo">
-    <h5 class="header-title">SISTEM KASIR VIA ADMIN</h5>
-  </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <img src="../logo/logo_login.jpg" alt="Logo" class="me-2 rounded" style="height:40px;">
+        SISTEM KASIR <span class="text-warning ms-1">ADMIN</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
 
-  <!-- Main Container -->
   <div class="container-fluid">
     <div class="row">
 
       <!-- Sidebar -->
-      <div class="col-md-2 sidebar">
-        <div class="menu-title">Admin</div>
-        <hr>
-        <a href="dashboard_admin.php" class="nav-link-custom">
-          <img src="../icon/icon_dashboard.png" class="icon-img"> Dashboard
+      <div class="col-md-2 d-flex flex-column" style="background-color:#343a40; min-height:100vh; padding-top:1rem;">
+        <h5 class="text-center text-warning mb-3">Admin</h5>
+        <hr class="border-secondary">
+        <a href="dashboard_admin.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_dashboard.png" class="me-2" style="height:24px;"> Dashboard
         </a>
-        <a href="kelola_produk_admin.php" class="nav-link-custom">
-          <img src="../icon/icon_produk.png" class="icon-img"> Kelola Produk
+        <a href="kelola_produk_admin.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_produk.png" class="me-2" style="height:24px;"> Kelola Produk
         </a>
-        <a href="#" class="nav-link-custom active">
-          <img src="../icon/icon_laporan.png" class="icon-img"> Laporan Penjualan
+        <a href="#" class="btn btn-light mb-2 d-flex align-items-center active text-dark">
+          <img src="../icon/icon_laporan.png" class="me-2" style="height:24px;"> Laporan Penjualan
         </a>
-        <a href="kelola_akun.php" class="nav-link-custom">
-          <img src="../icon/icon_kelola_akun.png" class="icon-img"> Kelola Akun
+        <a href="kelola_akun.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_kelola_akun.png" class="me-2" style="height:24px;"> Kelola Akun
         </a>
         <div class="mt-auto pt-3">
-          <a href="../login/logout.php" class="nav-link-custom">
-            <img src="../icon/icon_logout.jpg" class="icon-img"> Log out
+          <a href="../login/logout.php" class="btn btn-danger d-flex align-items-center">
+            <img src="../icon/icon_logout.jpg" class="me-2" style="height:24px;"> Log out
           </a>
         </div>
       </div>
 
       <!-- Main Content -->
-      <main class="col-md-10 main-content">
-        <h3 class="page-title">Laporan Penjualan</h3>
+      <main class="col-md-10 py-4">
+        <h3 class="mb-4 text-warning">Laporan Penjualan</h3>
 
         <!-- Filter Form -->
-        <form method="GET" class="filter-form">
-          <select name="periode">
-            <option value="">-- Pilih Periode --</option>
-            <option value="hari" <?= $periode == 'hari' ? 'selected' : '' ?>>Hari</option>
-            <option value="bulan" <?= $periode == 'bulan' ? 'selected' : '' ?>>Bulan</option>
-            <option value="tahun" <?= $periode == 'tahun' ? 'selected' : '' ?>>Tahun</option>
-          </select>
-          <input type="date" name="tanggal" value="<?= htmlspecialchars($tanggal) ?>">
-          <input type="text" name="cari_barang" placeholder="Cari Nama Barang" value="<?= htmlspecialchars($cariBarang) ?>">
-          <input type="text" name="cari_transaksi" placeholder="Cari No Transaksi" value="<?= htmlspecialchars($cariTransaksi) ?>">
-          <button type="submit" class="btn-filter">FILTER</button>
-          <a href="#" id="exportExcelBtn" class="btn-excel">📄 Export Excel</a>
+        <form method="GET" class="row g-2 align-items-end mb-4">
+          <div class="col-auto">
+            <select name="periode" class="form-select">
+              <option value="">-- Pilih Periode --</option>
+              <option value="hari" <?= $periode == 'hari' ? 'selected' : '' ?>>Hari</option>
+              <option value="bulan" <?= $periode == 'bulan' ? 'selected' : '' ?>>Bulan</option>
+              <option value="tahun" <?= $periode == 'tahun' ? 'selected' : '' ?>>Tahun</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <input type="date" name="tanggal" class="form-control" value="<?= htmlspecialchars($tanggal) ?>">
+          </div>
+          <div class="col-auto">
+            <input type="text" name="cari_barang" class="form-control" placeholder="Cari Nama Barang" value="<?= htmlspecialchars($cariBarang) ?>">
+          </div>
+          <div class="col-auto">
+            <input type="text" name="cari_transaksi" class="form-control" placeholder="Cari No Transaksi" value="<?= htmlspecialchars($cariTransaksi) ?>">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">FILTER</button>
+          </div>
+          <div class="col-auto">
+            <a href="#" id="exportExcelBtn" class="btn btn-success">📄 Export Excel</a>
+          </div>
         </form>
 
         <!-- Summary Cards -->
-        <div class="summary-row">
-          <div class="summary-card green">
-            <h4>Total Keuntungan</h4>
-            <p>Rp. <?= number_format($totalKeuntungan, 0, ',', '.') ?></p>
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card text-white bg-success mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Total Keuntungan</h5>
+                <p class="card-text fs-4">Rp. <?= number_format($totalKeuntungan, 0, ',', '.') ?></p>
+              </div>
+            </div>
           </div>
-          <div class="summary-card yellow">
-            <h4>Total Barang Terjual</h4>
-            <p><?= number_format($totalBarangTerjual) ?> pcs</p>
+          <div class="col-md-6">
+            <div class="card text-dark bg-warning mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Total Barang Terjual</h5>
+                <p class="card-text fs-4"><?= number_format($totalBarangTerjual) ?> pcs</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Date Info -->
-        <?php if (!isset($_GET['periode']) && !isset($_GET['tanggal']) && !isset($_GET['cari_barang'])): ?>
-          <div class="date-info">
-            <h4>Transaksi Hari Ini (<?= date('d-m-Y') ?>)</h4>
-          </div>
-        <?php endif; ?>
-
         <!-- Table -->
-        <div class="table-container">
-          <table class="custom-table">
-            <thead>
+        <div class="table-responsive">
+          <table class="table table-bordered table-dark mb-0">
+            <thead class="table-secondary text-dark">
               <tr>
                 <th>KASIR</th>
                 <th>NO TRANSAKSI</th>
@@ -188,7 +207,7 @@ $totalBarangTerjual = $summary['total_barang_terjual'] ?? 0;
                   </tr>
                 <?php endwhile; ?>
               <?php else: ?>
-                <tr><td colspan="7">Tidak ada data transaksi.</td></tr>
+                <tr><td colspan="7" class="text-center text-muted">Tidak ada data transaksi.</td></tr>
               <?php endif; ?>
             </tbody>
           </table>
@@ -199,9 +218,9 @@ $totalBarangTerjual = $summary['total_barang_terjual'] ?? 0;
   </div>
 
   <!-- Footer -->
-  <div class="footer">
+  <footer class="bg-dark text-center py-3 mt-4 text-light border-top border-secondary">
     editor bay @vitamin
-  </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -214,4 +233,5 @@ $totalBarangTerjual = $summary['total_barang_terjual'] ?? 0;
   </script>
 
 </body>
+
 </html>

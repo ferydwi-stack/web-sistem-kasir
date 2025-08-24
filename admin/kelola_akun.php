@@ -64,58 +64,61 @@ $result = mysqli_query($conn, $query);
   <meta charset="UTF-8">
   <title>Kelola Akun</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/kelola_akun.css">
+
 </head>
-<body>
+<body class="bg-dark text-light">
 
-  <!-- Header -->
-  <div class="header">
-    <img src="../logo/logo_login.jpg" alt="Logo" class="header-logo">
-    <h5 class="header-title">SISTEM KASIR VIA ADMIN</h5>
-  </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <img src="../logo/logo_login.jpg" alt="Logo" class="me-2 rounded" style="height:40px;">
+        SISTEM KASIR <span class="text-warning ms-1">ADMIN</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
 
-  <!-- Main Container -->
   <div class="container-fluid">
     <div class="row">
 
       <!-- Sidebar -->
-      <div class="col-md-2 sidebar">
-        <div class="menu-title">Admin</div>
-        <hr>
-        <a href="dashboard_admin.php" class="nav-link-custom">
-          <img src="../icon/icon_dashboard.png" class="icon-img"> Dashboard
+      <div class="col-md-2 d-flex flex-column" style="background-color:#343a40; min-height:100vh; padding-top:1rem;">
+        <h5 class="text-center text-warning mb-3">Admin</h5>
+        <hr class="border-secondary">
+        <a href="dashboard_admin.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_dashboard.png" class="me-2" style="height:24px;"> Dashboard
         </a>
-        <a href="kelola_produk_admin.php" class="nav-link-custom">
-          <img src="../icon/icon_produk.png" class="icon-img"> Kelola Produk
+        <a href="kelola_produk_admin.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_produk.png" class="me-2" style="height:24px;"> Kelola Produk
         </a>
-        <a href="laporan_penjualan.php" class="nav-link-custom">
-          <img src="../icon/icon_laporan.png" class="icon-img"> Laporan Penjualan
+        <a href="laporan_penjualan.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_laporan.png" class="me-2" style="height:24px;"> Laporan Penjualan
         </a>
-        <a href="#" class="nav-link-custom active">
-          <img src="../icon/icon_kelola_akun.png" class="icon-img"> Kelola Akun
+        <a href="#" class="btn btn-light mb-2 d-flex align-items-center active">
+          <img src="../icon/icon_kelola_akun.png" class="me-2" style="height:24px;"> Kelola Akun
         </a>
         <div class="mt-auto pt-3">
-          <a href="../login/logout.php" class="nav-link-custom">
-            <img src="../icon/icon_logout.jpg" class="icon-img"> Log out
+          <a href="../login/logout.php" class="btn btn-danger d-flex align-items-center">
+            <img src="../icon/icon_logout.jpg" class="me-2" style="height:24px;"> Log out
           </a>
         </div>
       </div>
 
       <!-- Main Content -->
-      <main class="col-md-10 main-content">
-        <h3 class="page-title">Data Kasir</h3>
-        
-        <button class="btn-add" onclick="document.getElementById('modalTambah').style.display='block'">
+      <main class="col-md-10 py-4">
+        <h3 class="mb-4 text-warning">Data Kasir</h3>
+        <button class="btn btn-primary mb-3" onclick="document.getElementById('modalTambah').style.display='flex'">
           + Tambah Kasir
         </button>
-
         <?php if ($pesan != ''): ?>
-          <div class="error-message"><?= $pesan ?></div>
+          <div class="alert alert-danger mb-3"><?= $pesan ?></div>
         <?php endif; ?>
-
-        <div class="table-container">
-          <table class="custom-table">
-            <thead>
+        <div class="table-responsive">
+          <table class="table table-bordered table-dark mb-0">
+            <thead class="table-secondary text-dark">
               <tr>
                 <th>No</th>
                 <th>Username</th>
@@ -138,7 +141,7 @@ $result = mysqli_query($conn, $query);
                   <td>kasir</td>
                   <td><?= htmlspecialchars($row['status']) ?></td>
                   <td>
-                    <button class="btn-edit" onclick='bukaModalEdit(`<?= htmlspecialchars($row["username"]) ?>`, `<?= htmlspecialchars($row["password"]) ?>`, `<?= htmlspecialchars($row["nama"]) ?>`, `<?= htmlspecialchars($row["status"]) ?>`)'>
+                    <button class="btn btn-warning btn-sm" onclick='bukaModalEdit(`<?= htmlspecialchars($row["username"]) ?>`, `<?= htmlspecialchars($row["password"]) ?>`, `<?= htmlspecialchars($row["nama"]) ?>`, `<?= htmlspecialchars($row["status"]) ?>`)'>
                       Perbarui
                     </button>
                   </td>
@@ -152,74 +155,68 @@ $result = mysqli_query($conn, $query);
     </div>
   </div>
 
-  <!-- Modal Tambah Kasir -->
-  <div id="modalTambah" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="document.getElementById('modalTambah').style.display='none'">&times;</span>
-      <h3>Tambah Kasir</h3>
+  <!-- Modal Tambah & Edit -->
+  <div id="modalTambah" class="modal" style="display:none; align-items:center; justify-content:center; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1050;">
+    <div class="bg-white rounded shadow p-4 border border-dark" style="min-width:300px; max-width:400px; margin:auto;">
+      <span class="float-end" style="cursor:pointer; font-size:1.5rem;" onclick="document.getElementById('modalTambah').style.display='none'">&times;</span>
+      <h4 class="mb-3">Tambah Kasir</h4>
       <form method="POST">
         <input type="hidden" name="tambah_kasir" value="1">
-        <div class="form-group">
-          <label>Username:</label>
-          <input type="text" name="username" required>
+        <div class="mb-3">
+          <label class="form-label">Username:</label>
+          <input type="text" name="username" class="form-control" required>
         </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" name="password" required>
+        <div class="mb-3">
+          <label class="form-label">Password:</label>
+          <input type="password" name="password" class="form-control" required>
         </div>
-        <div class="form-group">
-          <label>Nama Lengkap:</label>
-          <input type="text" name="nama" required>
+        <div class="mb-3">
+          <label class="form-label">Nama Lengkap:</label>
+          <input type="text" name="nama" class="form-control" required>
         </div>
-        <button type="submit" class="btn-submit">Simpan</button>
+        <button type="submit" class="btn btn-success w-100">Simpan</button>
       </form>
     </div>
   </div>
 
-  <!-- Modal Edit Kasir -->
-  <div id="modalEdit" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="document.getElementById('modalEdit').style.display='none'">&times;</span>
-      <h3>Edit Kasir</h3>
+  <div id="modalEdit" class="modal" style="display:none; align-items:center; justify-content:center; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1050;">
+    <div class="bg-white rounded shadow p-4 border border-dark" style="min-width:300px; max-width:400px; margin:auto;">
+      <span class="float-end" style="cursor:pointer; font-size:1.5rem;" onclick="document.getElementById('modalEdit').style.display='none'">&times;</span>
+      <h4 class="mb-3">Edit Kasir</h4>
       <form method="POST">
         <input type="hidden" name="edit_kasir" value="1">
         <input type="hidden" name="username_lama" id="edit_username_lama">
-
-        <div class="form-group">
-          <label>Username:</label>
-          <input type="text" name="username" id="edit_username" required>
+        <div class="mb-3">
+          <label class="form-label">Username:</label>
+          <input type="text" name="username" id="edit_username" class="form-control" required>
         </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="text" name="password" id="edit_password" required>
+        <div class="mb-3">
+          <label class="form-label">Password:</label>
+          <input type="text" name="password" id="edit_password" class="form-control" required>
         </div>
-        <div class="form-group">
-          <label>Nama Lengkap:</label>
-          <input type="text" name="nama" id="edit_nama" required>
+        <div class="mb-3">
+          <label class="form-label">Nama Lengkap:</label>
+          <input type="text" name="nama" id="edit_nama" class="form-control" required>
         </div>
-        <button type="submit" class="btn-submit">Simpan Perubahan</button>
+        <button type="submit" class="btn btn-success w-100">Simpan Perubahan</button>
       </form>
-
-      <!-- Tombol Hapus Kasir -->
       <form method="POST" onsubmit="return confirm('Yakin ingin menghapus kasir ini?')">
         <input type="hidden" name="hapus_kasir" value="1">
         <input type="hidden" name="username_hapus" id="hapus_username">
-        <button type="submit" class="btn-delete">
-          Hapus Kasir
-        </button>
+        <button type="submit" class="btn btn-danger w-100 mt-2">Hapus Kasir</button>
       </form>
     </div>
   </div>
 
   <!-- Footer -->
-  <div class="footer">
+  <footer class="bg-dark text-center py-3 mt-4 text-light border-top border-secondary">
     editor bay @vitamin
-  </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     function bukaModalEdit(username, password, nama, status) {
-      document.getElementById('modalEdit').style.display = 'block';
+      document.getElementById('modalEdit').style.display = 'flex';
       document.getElementById('edit_username').value = username;
       document.getElementById('edit_password').value = password;
       document.getElementById('edit_nama').value = nama;
@@ -228,12 +225,12 @@ $result = mysqli_query($conn, $query);
     }
 
     window.onclick = function(event) {
-      const modalTambah = document.getElementById('modalTambah');
-      const modalEdit = document.getElementById('modalEdit');
-      if (event.target == modalTambah) modalTambah.style.display = "none";
-      if (event.target == modalEdit) modalEdit.style.display = "none";
+      if(event.target.classList.contains('modal')){
+        event.target.style.display = "none";
+      }
     }
   </script>
 
 </body>
+
 </html>

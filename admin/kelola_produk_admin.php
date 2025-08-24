@@ -44,54 +44,59 @@ $result = $conn->query($sql);
   <meta charset="UTF-8">
   <title>Kelola Produk</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/kelola_produk_admin.css">
+
 </head>
 <body>
+<div class="bg-dark text-light">
 
-  <!-- Header -->
-  <div class="header">
-    <img src="../logo/logo_login.jpg" alt="Logo" class="header-logo">
-    <h5 class="header-title">SISTEM KASIR VIA ADMIN</h5>
-  </div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+        <img src="../logo/logo_login.jpg" alt="Logo" class="me-2 rounded" style="height:40px;">
+        SISTEM KASIR <span class="text-warning ms-1">ADMIN</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
 
-  <!-- Main Container -->
   <div class="container-fluid">
     <div class="row">
 
       <!-- Sidebar -->
-      <div class="col-md-2 sidebar">
-        <div class="menu-title">Admin</div>
-        <hr>
-        <a href="dashboard_admin.php" class="nav-link-custom">
-          <img src="../icon/icon_dashboard.png" class="icon-img"> Dashboard
+      <div class="col-md-2 d-flex flex-column" style="background-color:#343a40; min-height:100vh; padding-top:1rem;">
+        <h5 class="text-center text-warning mb-3">Admin</h5>
+        <hr class="border-secondary">
+        <a href="dashboard_admin.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_dashboard.png" class="me-2" style="height:24px;"> Dashboard
         </a>
-        <a href="#" class="nav-link-custom active">
-          <img src="../icon/icon_produk.png" class="icon-img"> Kelola Produk
+        <a href="#" class="btn btn-light mb-2 d-flex align-items-center active">
+          <img src="../icon/icon_produk.png" class="me-2" style="height:24px;"> Kelola Produk
         </a>
-        <a href="laporan_penjualan.php" class="nav-link-custom">
-          <img src="../icon/icon_laporan.png" class="icon-img"> Laporan Penjualan
+        <a href="laporan_penjualan.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_laporan.png" class="me-2" style="height:24px;"> Laporan Penjualan
         </a>
-        <a href="kelola_akun.php" class="nav-link-custom">
-          <img src="../icon/icon_kelola_akun.png" class="icon-img"> Kelola Akun
+        <a href="kelola_akun.php" class="btn btn-outline-light mb-2 d-flex align-items-center">
+          <img src="../icon/icon_kelola_akun.png" class="me-2" style="height:24px;"> Kelola Akun
         </a>
         <div class="mt-auto pt-3">
-          <a href="../login/logout.php" class="nav-link-custom">
-            <img src="../icon/icon_logout.jpg" class="icon-img"> Log out
+          <a href="../login/logout.php" class="btn btn-danger d-flex align-items-center">
+            <img src="../icon/icon_logout.jpg" class="me-2" style="height:24px;"> Log out
           </a>
         </div>
       </div>
 
       <!-- Main Content -->
-      <main class="col-md-10 main-content">
-        <h3 class="page-title">Kelola Produk</h3>
-        
-        <button class="btn-add" onclick="document.getElementById('modalTambah').style.display='flex'">
+      <main class="col-md-10 py-4">
+        <h3 class="mb-4 text-warning">Kelola Produk</h3>
+        <button class="btn btn-primary mb-3" onclick="document.getElementById('modalTambah').style.display='flex'">
           + Tambah Barang
         </button>
-
-        <div class="table-container">
-          <table class="custom-table">
-            <thead>
+        <div class="table-responsive">
+          <table class="table table-bordered table-dark mb-0">
+            <thead class="table-secondary text-dark">
               <tr>
                 <th>ID</th>
                 <th>Nama Barang</th>
@@ -108,7 +113,7 @@ $result = $conn->query($sql);
                 <td><?= $row['stok'] ?></td>
                 <td>Rp. <?= number_format($row['harga_barang'], 0, ',', '.') ?></td>
                 <td>
-                  <button class="btn-update" 
+                  <button class="btn btn-warning btn-sm" 
                     onclick="openEditModal('<?= htmlspecialchars($row['id_barang']) ?>', 
                                          '<?= htmlspecialchars($row['nama_barang'], ENT_QUOTES) ?>',
                                          <?= $row['stok'] ?>,
@@ -126,64 +131,10 @@ $result = $conn->query($sql);
     </div>
   </div>
 
-  <!-- Modal Tambah -->
-  <div class="modal" id="modalTambah">
-    <div class="modal-content">
-      <h3>Tambah Barang</h3>
-      <form method="POST">
-        <input type="hidden" name="aksi" value="tambah">
-        <div class="form-group">
-          <label>ID Barang:</label>
-          <input type="text" name="id_barang" required>
-        </div>
-        <div class="form-group">
-          <label>Nama Barang:</label>
-          <input type="text" name="nama_barang" required>
-        </div>
-        <div class="form-group">
-          <label>Stok:</label>
-          <input type="number" name="stok" required>
-        </div>
-        <div class="form-group">
-          <label>Harga Barang:</label>
-          <input type="number" name="harga_barang" step="0.01" required>
-        </div>
-        <button type="submit" class="btn-success">Simpan</button>
-        <button type="button" class="btn-cancel" onclick="document.getElementById('modalTambah').style.display='none'">Batal</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Edit -->
-  <div class="modal" id="modalEdit">
-    <div class="modal-content">
-      <h3>Perbarui Barang</h3>
-      <form method="POST">
-        <input type="hidden" name="aksi" value="edit">
-        <input type="hidden" name="id_barang" id="edit_id_barang">
-        <div class="form-group">
-          <label>Nama Barang:</label>
-          <input type="text" name="nama_barang" id="edit_nama_barang" required>
-        </div>
-        <div class="form-group">
-          <label>Stok:</label>
-          <input type="number" name="stok" id="edit_stok" required>
-        </div>
-        <div class="form-group">
-          <label>Harga Barang:</label>
-          <input type="number" name="harga_barang" id="edit_harga_barang" step="0.01" required>
-        </div>
-        <button type="submit" class="btn-success">Simpan Perubahan</button>
-        <button type="submit" name="hapus" value="1" class="btn-danger" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus Barang</button>
-        <button type="button" class="btn-cancel" onclick="document.getElementById('modalEdit').style.display='none'">Batal</button>
-      </form>
-    </div>
-  </div>
-
   <!-- Footer -->
-  <div class="footer">
+  <footer class="bg-dark text-center py-3 mt-4 border-top border-secondary text-light">
     editor bay @vitamin
-  </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
